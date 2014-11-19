@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" >
+	<title>Cárdapio</title>
+	
+	 <!-- Script - Need to load Jquery before anything else -->
+    <script type="text/javascript" language="javascript" src="./js/jquery-1.11.1.js"> </script>
+    <script type="text/javascript" src="./js/jquery.simplePagination.js"></script>
+	
+	<!-- Css -->
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/simplePagination.css"/>
+	
+	<!-- Script -->
+	<script language="javascript" src="./js/bootstrap.js"> </script>
+	<script language="javascript" src="./js/bootstrap.min.js"> </script>
+	
+	<script type="text/javascript	">
+	// mind the slight change below, personal idea of best practices
+	jQuery(function($) {
+    // consider adding an id to your table,
+    // just incase a second table ever enters the picture..?
+    var items = $("table tr");
+
+    var numItems = items.length;
+    var perPage = 2;
+
+    // only show the first 2 (or "first per_page") items initially
+    items.slice(perPage).hide();
+
+    // now setup your pagination
+    // you need that .pagination-page div before/after your table
+    $(".pagination-page").pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        cssStyle: "light-theme",
+        onPageClick: function(pageNumber) { // this is where the magic happens
+            // someone changed page, lets hide/show trs appropriately
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+
+            items.hide() // first hide everything, then show for the new page
+                 .slice(showFrom, showTo).show();
+        }
+    });
+	});
+	</script>
+	
+</head>
+<body>
+	<div id="interface">
+		<div id="components" class="container">
+			<div id="first" class="col-sm-4">
+				<table>
+					<tr>
+						<td class="first">Pépi</td>
+						<td class="second">Arroz Branco</td>		
+						<td class="third">R$ 6,10</td>
+					</tr>
+					<tr>
+						<td class="first">Vivi</td>
+						<td class="second">Arroz com espinafre</td>		
+						<td class="third">R$ 6,35</td>
+					</tr>
+					<tr>
+						<td class="first">Lica</td>
+						<td class="second">Risoto de cenouta (arroz...)</td>		
+						<td class="third">R$ 6,35</td>
+					</tr>
+				</table>
+			</div>
+			<div class="pagination-page"></div>
+		</div>
+	</div>
+</body>
+</html>
